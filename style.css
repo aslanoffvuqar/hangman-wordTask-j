@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.hangman-image {
+    max-width: 100%;
+}
+
+.guesses-left {
+    margin-top: 20px;
+    font-size: 20px;
+}

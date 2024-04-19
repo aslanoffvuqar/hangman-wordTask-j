@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Hangman Game</h1>
+    <div id="word"></div>
+    <div id="guesses-left" class="guesses-left"></div>
+    <button id="restart-btn">Restart Game</button>
+    <script>
+        const words = ['aghdam',
+            'agdash',
+            'aghjabadi',
+            'agstafa',
+            'agsu',
+            'astara',
+            'aghdara',
+            'babek',
+            'baku',
+            'balakən',
+            'barda',
+            'beylagan',
+            'bilasuvar',
+            'dashkasan',
+            'shabran',
+            'fuzuli',
+            'gadabay',
+            'ganja',
+            'goranboy',
+            'goychay',
+            'goygol',
+            'hajigabul',
+            'imishli',
+            'ismayilli',
+            'jabrayil',
+            'julfa',
+            'kalbajar',
+            'khachmaz',
+            'khankendi',
+            'khojavend',
+            'khirdalan',
+            'kurdamir',
+            'lankaran',
+            'lerik',
+            'masally',
+            'mingachevir',
+            'nakhchivan',
+            'naftalan',
+            'neftchala',
+            'oghuz',
+            'ordubad',
+            'qabala',
+            'qakh',
+            'qazakh',
+            'quba',
+            'qubadli',
+            'qusar',
+            'saatli',
+            'sabirabad',
+            'shahbuz',
+            'shaki',
+            'shamakhi',
+            'shamkir',
+            'sharur',
+            'shirvan',
+            'siyazan',
+            'shusha',
+            'sumgait',
+            'tartar',
+            'tovuz',
+            'ujar',
+            'yardimli',
+            'yevlakh',
+            'zaqatala',
+            'zardab',
+            'zangilan'];
+        let chosenWord = '';
+        let wordDisplay = [];
+        let guessesLeft = 6;
+        let lettersGuessed = []
+        function chooseWord() {
+            chosenWord = words[Math.floor(Math.random() * words.length)];
+            updateWordDisplay();
+            updateGuessesLeft();
+
+        }
+
+        // sozu təzəliyir
+        function updateWordDisplay() {
+            document.getElementById('word').innerText = wordDisplay.join(' ');
+        }
+
+        // qalan can sayi
+        function updateGuessesLeft() {
+            document.getElementById('guesses-left').innerText = `Guesses left: ${guessesLeft}`;
+        }
+
+
+        // oyunu basladir
+        document.getElementById('restart-btn').addEventListener('click', () => {
+            chosenWord = '';
+            wordDisplay = [];
+            guessesLeft = 6;
+            lettersGuessed = [];
+            chooseWord();
+        });
+
+
+        // klavye prees
+        document.addEventListener('keydown', event => {
+            const letter = event.key.toLowerCase();
+            if (/^[a-z]$/.test(letter)) {
+                checkLetter(letter);
+            }
+        });
+        function checkLetter(letter) {
+            if (chosenWord.includes(letter)) {
+                for (let i = 0; i < chosenWord.length; i++) {
+                    if (chosenWord[i] === letter) {
+                        wordDisplay[i] = letter;
+                    }
+                }
+                updateWordDisplay();
+                if (!wordDisplay.includes('_')) {
+                    alert('You win!');
+                }
+            } else {
+                if (guessesLeft === 0) {
+                    alert('Game over!');
+                    return;
+                }
+                guessesLeft--;
+                updateGuessesLeft();
+            }
+            lettersGuessed.push(letter);
+
+        }
+    </script>
+</body>
+
+</html>
